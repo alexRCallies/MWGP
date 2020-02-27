@@ -35,6 +35,7 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
       // TODO: get person's info
+      displayPerson(person);
       break;
     case "family":
       // TODO: get person's family
@@ -63,6 +64,69 @@ function searchByName(people){
   });
 
   // TODO: What to do with filteredPeople?
+
+}
+
+function searchByTraits(people){
+  var selectedTraits;
+  var searchTraits = promptFor("Choose a trait to search for: Gender \n Date of Birth (mm/dd/year) \n Height (inches) \n Weight (lbs) \n Eye Color \n Occupation", char).toLocaleLowerCase();
+  switch(searchTraits){
+    case "gender":
+      var gender = promptFor("What is the person's gender", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+    case "date of birth":
+      var dob = promptFor("What is the person's date of birth(mm/dd/year)?", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+          ;
+    case "height":
+      var height = promptFor("What is the person's height(inches)?", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+    case "weight":
+      var weight = promptFor("What is the person's weight(lbs)?", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+    case "eye color":
+      var eyeColor = promptFor("What is the person's eye color?", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+    case "occupation":
+      var occupation = promptFor("What is the person's occupation?", chars);
+      selectedTraits += chars;
+      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
+      switch(moreTraits){
+        case "yes":
+          searchByTraits();
+        case "no":
+  }
+
+  let filteredPeople = people.filter(function(el) {
+    if(el.gender === gender && el.dob === dob && el.height === height && el.weight === weight && el.eyeColor === eyeColor && el.occupation === occupation){
+      return el;
+    }
+  });
 
 }
 
