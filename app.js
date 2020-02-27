@@ -79,7 +79,9 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
+      }
     case "date of birth":
       var dob = promptFor("What is the person's date of birth(mm/dd/year)?", chars);
       selectedTraits += chars;
@@ -87,8 +89,10 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
           ;
+      }
     case "height":
       var height = promptFor("What is the person's height(inches)?", chars);
       selectedTraits += chars;
@@ -96,7 +100,9 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
+      }
     case "weight":
       var weight = promptFor("What is the person's weight(lbs)?", chars);
       selectedTraits += chars;
@@ -104,7 +110,9 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
+      }
     case "eye color":
       var eyeColor = promptFor("What is the person's eye color?", chars);
       selectedTraits += chars;
@@ -112,7 +120,9 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
+      }
     case "occupation":
       var occupation = promptFor("What is the person's occupation?", chars);
       selectedTraits += chars;
@@ -120,14 +130,21 @@ function searchByTraits(people){
       switch(moreTraits){
         case "yes":
           searchByTraits();
+          break;
         case "no":
+      }
   }
+
 
   let filteredPeople = people.filter(function(el) {
     if(el.gender === gender && el.dob === dob && el.height === height && el.weight === weight && el.eyeColor === eyeColor && el.occupation === occupation){
       return el;
     }
   });
+
+}
+
+function compareTraits(selectedTraits){
 
 }
 
