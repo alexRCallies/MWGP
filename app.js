@@ -30,13 +30,13 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
       
       // TODO: get person's info
-      displayPerson(person);
+      displayPerson(person[0]);
       break;
     case "family":
       // TODO: get person's family
@@ -63,8 +63,8 @@ var searchByName = function(people){
       return el;
     }
   });
-
- mainMenu(filteredPeople, searchByName);
+person = filteredPeople[0];
+ mainMenu(person, searchByName);
 
 }
 
