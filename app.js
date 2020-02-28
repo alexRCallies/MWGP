@@ -31,16 +31,14 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+   var displayOption = prompt("Found "+ person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-      
-      // TODO: get person's info
       displayPerson(person);
       break;
     case "family":
-      // TODO: get person's family
+      displayParents(person,people);
       break;
     case "descendants":
       // TODO: get person's descendants
@@ -59,16 +57,53 @@ var searchByName = function(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
 
-  let filteredPeople = people.filter(function(el) {
+  var filteredPeople = people.filter(function(el) {
     if(el.firstName === firstName && el.lastName === lastName) {
       return el;
     }
   });
-
- mainMenu(filteredPeople, searchByName);
+person = filteredPeople[0];
+ mainMenu(person, people);
 
 }
+var findChildren = function(person, people){
+  var filterChildren = people.filter(function(el){
+    for(let i = 0; i<el.parents.length; i++)
+    {
+      if(el.parents[i] === person.id)
+      return el
+    }
+  });
+  displayPeople(filterChildren);
+}
+var displayParents = function(person,people){
+  var parents1 = person.parents[0];
+  var parents2 = person.parents[1];
+  var spouse1 = person.currentSpouse;
+  var filteredFamily = people.filter(function(el){
+    //for(let i = 0; i< el.parents.length; i++)
+    //{
+     // if(el.parents[i] === person.id)
+     // return el;
+    //}
+   
+    if(el.id === parents1 || el.id === parents2 || el.id === spouse1){
+      return el;
+    }
+    });
+    //for(let i = 0; i < filteredFamily.length; i++)
+    //{
+      //displayPerson(filteredFamily[i]);
+    //}
+    findChildren(person,people);
+    displayPeople(filteredFamily);
+   }
+   var displayDescendants = function(person,people){
+     var filterDescendants =people.filter(function(el){
 
+     }
+     )
+   }
 function searchByTraits(people){
   var filteredPeople;
   var searchTraits = promptFor("Choose a trait to search for:\nGender\nDate of Birth (mm/dd/year)\nHeight (inches)\nWeight (lbs)\nEye Color\nOccupation", chars).toLowerCase();
@@ -83,6 +118,7 @@ function searchByTraits(people){
       displayPeople(people);
       break;
     case "date of birth":
+
       var dob = promptFor("Enter the person's Date of Birth", chars);
       people = people.filter(function(el) {
         if(el.dob === dob) {
@@ -91,6 +127,7 @@ function searchByTraits(people){
       });
       displayPeople(people);
       break;
+
     case "height":
       var height = promptFor("Enter the person's Height", chars);
       people = people.filter(function(el) {
@@ -135,6 +172,7 @@ function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
+
   var refineSearch = promptFor("Do you want to refine your search?", chars);
   switch(refineSearch){
     case "yes":
