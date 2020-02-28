@@ -12,6 +12,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      searchByTraits(people);
       break;
     default:
       alert("Invalid input. Please try again!");
@@ -69,83 +70,64 @@ var searchByName = function(people){
 }
 
 function searchByTraits(people){
-  var selectedTraits;
-  var searchTraits = promptFor("Choose a trait to search for: Gender \n Date of Birth (mm/dd/year) \n Height (inches) \n Weight (lbs) \n Eye Color \n Occupation", char).toLocaleLowerCase();
+  var filteredPeople;
+  var searchTraits = promptFor("Choose a trait to search for:\nGender\nDate of Birth (mm/dd/year)\nHeight (inches)\nWeight (lbs)\nEye Color\nOccupation", chars).toLowerCase();
   switch(searchTraits){
     case "gender":
-      var gender = promptFor("What is the person's gender", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-      }
+      var gender = promptFor("Enter the person's gender", chars);
+      people = people.filter(function(el) {
+        if(el.gender === gender) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
     case "date of birth":
-      var dob = promptFor("What is the person's date of birth(mm/dd/year)?", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-          ;
-      }
+      var dob = promptFor("Enter the person's Date of Birth", chars);
+      people = people.filter(function(el) {
+        if(el.dob === dob) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
     case "height":
-      var height = promptFor("What is the person's height(inches)?", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-      }
+      var height = promptFor("Enter the person's Height", chars);
+      people = people.filter(function(el) {
+        if(el.height === height) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
     case "weight":
-      var weight = promptFor("What is the person's weight(lbs)?", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-      }
+      var weight = promptFor("Enter the person's Weight", chars);
+      people = people.filter(function(el) {
+        if(el.weight === weight) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
     case "eye color":
-      var eyeColor = promptFor("What is the person's eye color?", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-      }
+      var eyeColor = promptFor("Enter the person's Eye Color", chars);
+      people = people.filter(function(el) {
+        if(el.eyeColor === eyeColor) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
     case "occupation":
-      var occupation = promptFor("What is the person's occupation?", chars);
-      selectedTraits += chars;
-      var moreTraits = promptFor("Would you like to enter more traits?", yesNo).toLocaleLowerCase();
-      switch(moreTraits){
-        case "yes":
-          searchByTraits();
-          break;
-        case "no":
-      }
+      var occupation = promptFor("Enter the person's Occupation", chars);
+      people = people.filter(function(el) {
+        if(el.occupation === occupation) {
+          return el;
+        }
+      });
+      displayPeople(people);
+      break;
   }
-
-
-  let filteredPeople = people.filter(function(el) {
-    if(el.gender === gender && el.dob === dob && el.height === height && el.weight === weight && el.eyeColor === eyeColor && el.occupation === occupation){
-      return el;
-    }
-  });
-
-}
-
-function compareTraits(selectedTraits){
-
 }
 
 // alerts a list of people
@@ -153,6 +135,15 @@ function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
+  var refineSearch = promptFor("Do you want to refine your search?", chars);
+  switch(refineSearch){
+    case "yes":
+      searchByTraits(people);
+      break;
+    case "no":
+      app(people);
+      break;
+  }
 }
 
 function displayPerson(person){
