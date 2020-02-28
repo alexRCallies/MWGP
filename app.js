@@ -86,17 +86,16 @@ var FindDescendants = function(person,people){
       return el
     }
   });
-  
+  if(filterDescendants.length != 0)
+  {
+  displayChildren(filterDescendants);
+  }
   if(filterDescendants.length > 0)
   {
   for(let i = 0; i< filterDescendants.length;i++)
   {
  FindDescendants(filterDescendants[i],people)
   }}
-  else
-  {
- displayPeople(filterDescendants);
-  }
 }
 var displayParents = function(person,people){
   var parents1 = person.parents[0];
@@ -191,6 +190,13 @@ function searchByTraits(people){
 }
 
 // alerts a list of people
+function displayChildren(people)
+{
+  
+alert(people.map(function(person){
+  return person.firstName + " " + person.lastName;
+}).join("\n"));
+}
 function displayPeople(people){
   if(people == null){
     alert("Could not find that individual.");
