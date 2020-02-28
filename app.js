@@ -109,78 +109,84 @@ function searchByTraits(people){
   var searchTraits = promptFor("Choose a trait to search for:\nGender\nDate of Birth (mm/dd/year)\nHeight (inches)\nWeight (lbs)\nEye Color\nOccupation", chars).toLowerCase();
   switch(searchTraits){
     case "gender":
-      var gender = promptFor("Enter the person's gender", chars);
-      people = people.filter(function(el) {
+      var gender = promptFor("Enter the person's gender", chars).toLowerCase();
+      filteredPeople = people.filter(function(el) {
         if(el.gender === gender) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
     case "date of birth":
 
-      var dob = promptFor("Enter the person's Date of Birth", chars);
-      people = people.filter(function(el) {
+      var dob = promptFor("Enter the person's Date of Birth", chars).toString().toLowerCase();
+      filteredPeople = people.filter(function(el) {
         if(el.dob === dob) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
 
     case "height":
-      var height = promptFor("Enter the person's Height", chars);
-      people = people.filter(function(el) {
+      var height = parseInt(promptFor("Enter the person's Height", chars));
+      filteredPeople = people.filter(function(el) {
         if(el.height === height) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
     case "weight":
-      var weight = promptFor("Enter the person's Weight", chars);
-      people = people.filter(function(el) {
+      var weight = ParseInt(promptFor("Enter the person's Weight", chars));
+      filteredPeople = people.filter(function(el) {
         if(el.weight === weight) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
     case "eye color":
-      var eyeColor = promptFor("Enter the person's Eye Color", chars);
-      people = people.filter(function(el) {
+      var eyeColor = promptFor("Enter the person's Eye Color", chars).toLowerCase();
+      filteredPeople = people.filter(function(el) {
         if(el.eyeColor === eyeColor) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
     case "occupation":
-      var occupation = promptFor("Enter the person's Occupation", chars);
-      people = people.filter(function(el) {
+      var occupation = promptFor("Enter the person's Occupation", chars).toLowerCase();
+      filteredPeople = people.filter(function(el) {
         if(el.occupation === occupation) {
           return el;
         }
       });
-      displayPeople(people);
+      displayPeople(filteredPeople);
       break;
   }
 }
 
 // alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
+function displayPeople(filteredPeople){
+  if(filteredPeople.length < 2){
+    var person = filteredPeople[0];
+    displayPerson(person);
+  }
+  else{
+    alert(filteredPeople.map(function(person){
+      return person.firstName + " " + person.lastName;
+    }).join("\n"));
 
-  var refineSearch = promptFor("Do you want to refine your search?", chars);
-  switch(refineSearch){
-    case "yes":
-      searchByTraits(people);
-      break;
-    case "no":
-      app(people);
-      break;
+    var refineSearch = promptFor("Do you want to refine your search?", chars);
+    switch(refineSearch){
+      case "yes":
+        searchByTraits(filteredPeople);
+        break;
+      case "no":
+        displayPeople(filteredPeople);
+        break;
+    }
   }
 }
 
