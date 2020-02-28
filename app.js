@@ -42,7 +42,7 @@ function mainMenu(person, people){
       break;
     case "descendants":
       // TODO: get person's descendants
-      displayDescendants(person,people);
+      FindDescendants(person,people);
       break;
     case "restart":
       app(people); // restart
@@ -77,13 +77,26 @@ var findChildren = function(person, people){
   });
   displayPeople(filterChildren);
 }
-var displayDescendants = function(person,people){
- var findDescendants = findChildren(person,people);
- if(findDescendants.length > 0)
- for(let i = 0; i < findDescendants.length; i++)
- {
- displayDescendants(findDescendants[i],findDescendants);
- }
+var FindDescendants = function(person,people){
+ 
+ var filterDescendants = people.filter(function(el){
+    for(let i = 0; i<el.parents.length; i++)
+    {
+      if(el.parents[i] === person.id)
+      return el
+    }
+  });
+  
+  if(filterDescendants.length > 0)
+  {
+  for(let i = 0; i< filterDescendants.length;i++)
+  {
+ FindDescendants(filterDescendants[i],people)
+  }}
+  else
+  {
+ displayPeople(filterDescendants);
+  }
 }
 var displayParents = function(person,people){
   var parents1 = person.parents[0];
@@ -119,9 +132,9 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "date of birth":
-
       var dob = promptFor("Enter the person's Date of Birth", chars).toString().toLowerCase();
       filteredPeople = people.filter(function(el) {
         if(el.dob === dob) {
@@ -129,8 +142,8 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
-
     case "height":
       var height = parseInt(promptFor("Enter the person's Height", chars));
       filteredPeople = people.filter(function(el) {
@@ -139,6 +152,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "weight":
       var weight = ParseInt(promptFor("Enter the person's Weight", chars));
@@ -148,6 +162,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "eye color":
       var eyeColor = promptFor("Enter the person's Eye Color", chars).toLowerCase();
@@ -157,6 +172,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "occupation":
       var occupation = promptFor("Enter the person's Occupation", chars).toLowerCase();
@@ -166,30 +182,40 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
+    default:
+      alert(Console.Log("That is not a valid option. Choose a valid trait."))
+      return (searchByTraits(people));
   }
 }
 
 // alerts a list of people
-function displayPeople(filteredPeople){
-  if(filteredPeople.length < 2){
-    var person = filteredPeople[0];
+function displayPeople(people){
+  if(people == null){
+    alert("Could not find that individual.");
+    return;
+  }
+  else if(people.length < 2){
+    var person = people[0];
     displayPerson(person);
   }
   else{
-    alert(filteredPeople.map(function(person){
+    alert(people.map(function(person){
       return person.firstName + " " + person.lastName;
     }).join("\n"));
+  }
+}
 
-    var refineSearch = promptFor("Do you want to refine your search?", chars);
-    switch(refineSearch){
-      case "yes":
-        searchByTraits(filteredPeople);
-        break;
-      case "no":
-        displayPeople(filteredPeople);
-        break;
-    }
+function refineSearch(people){
+  var refineSearch = promptFor("Do you want to refine your search?", chars);
+  switch(refineSearch){
+    case "yes":
+      searchByTraits(people);
+      break;
+    case "no":
+      displayPeople(people);
+      break;
   }
 }
 
