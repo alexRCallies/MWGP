@@ -68,18 +68,22 @@ person = filteredPeople[0];
 var displayParents = function(person,people){
   var parents1 = person.parents[0];
   var parents2 = person.parents[1];
-  var filteredParents = people.filter(function(el){
-    if(el.id === parents1 || el.id === parents2){
+  var spouse1 = person.currentSpouse;
+  var filteredFamily = people.filter(function(el){
+    for(let i = 0; i< el.parents.length; i++)
+    {
+      if(el.parents[i] === person.id)
+      return el;
+    }
+    if(el.id === parents1 || el.id === parents2 || el.id === spouse1){
       return el;
     }
     });
-    for(let i = 0; i < filteredParents.length; i++)
+    for(let i = 0; i < filteredFamily.length; i++)
     {
-      displayPerson(filteredParents[i]);
+      displayPerson(filteredFamily[i]);
     }
-  }
-    //if(el.id === parents1) { //|| el.id === parents2){
-      //return el;
+   }
 function searchByTraits(people){
   var selectedTraits;
   var searchTraits = promptFor("Choose a trait to search for: Gender \n Date of Birth (mm/dd/year) \n Height (inches) \n Weight (lbs) \n Eye Color \n Occupation", char).toLocaleLowerCase();
