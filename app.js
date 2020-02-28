@@ -116,9 +116,9 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "date of birth":
-
       var dob = promptFor("Enter the person's Date of Birth", chars).toString().toLowerCase();
       filteredPeople = people.filter(function(el) {
         if(el.dob === dob) {
@@ -126,8 +126,8 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
-
     case "height":
       var height = parseInt(promptFor("Enter the person's Height", chars));
       filteredPeople = people.filter(function(el) {
@@ -136,6 +136,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "weight":
       var weight = ParseInt(promptFor("Enter the person's Weight", chars));
@@ -145,6 +146,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "eye color":
       var eyeColor = promptFor("Enter the person's Eye Color", chars).toLowerCase();
@@ -154,6 +156,7 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
     case "occupation":
       var occupation = promptFor("Enter the person's Occupation", chars).toLowerCase();
@@ -163,13 +166,21 @@ function searchByTraits(people){
         }
       });
       displayPeople(filteredPeople);
+      refineSearch(filteredPeople);
       break;
+    default:
+      alert(Console.Log("That is not a valid option. Choose a valid trait."))
+      return (searchByTraits(people));
   }
 }
 
 // alerts a list of people
 function displayPeople(filteredPeople){
-  if(filteredPeople.length < 2){
+  if(filteredPeople == null){
+    alert("Could not find that individual.");
+    return;
+  }
+  else if(filteredPeople.length < 2){
     var person = filteredPeople[0];
     displayPerson(person);
   }
@@ -177,16 +188,18 @@ function displayPeople(filteredPeople){
     alert(filteredPeople.map(function(person){
       return person.firstName + " " + person.lastName;
     }).join("\n"));
+  }
+}
 
-    var refineSearch = promptFor("Do you want to refine your search?", chars);
-    switch(refineSearch){
-      case "yes":
-        searchByTraits(filteredPeople);
-        break;
-      case "no":
-        displayPeople(filteredPeople);
-        break;
-    }
+function refineSearch(filteredPeople){
+  var refineSearch = promptFor("Do you want to refine your search?", chars);
+  switch(refineSearch){
+    case "yes":
+      searchByTraits(filteredPeople);
+      break;
+    case "no":
+      displayPeople(filteredPeople);
+      break;
   }
 }
 
