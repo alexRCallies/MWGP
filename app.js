@@ -30,16 +30,14 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+   var displayOption = prompt("Found "+ person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-      
-      // TODO: get person's info
-      displayPerson(person[0]);
+      displayPerson(person);
       break;
     case "family":
-      // TODO: get person's family
+      displayParents(person,people);
       break;
     case "descendants":
       // TODO: get person's descendants
@@ -58,16 +56,30 @@ var searchByName = function(people){
   var firstName = promptFor("What is the person's first name?", chars);
   var lastName = promptFor("What is the person's last name?", chars);
 
-  let filteredPeople = people.filter(function(el) {
+  var filteredPeople = people.filter(function(el) {
     if(el.firstName === firstName && el.lastName === lastName) {
       return el;
     }
   });
 person = filteredPeople[0];
- mainMenu(person, searchByName);
+ mainMenu(person, people);
 
 }
-
+var displayParents = function(person,people){
+  var parents1 = person.parents[0];
+  var parents2 = person.parents[1];
+  var filteredParents = people.filter(function(el){
+    if(el.id === parents1 || el.id === parents2){
+      return el;
+    }
+    });
+    for(let i = 0; i < filteredParents.length; i++)
+    {
+      displayPerson(filteredParents[i]);
+    }
+  }
+    //if(el.id === parents1) { //|| el.id === parents2){
+      //return el;
 function searchByTraits(people){
   var selectedTraits;
   var searchTraits = promptFor("Choose a trait to search for: Gender \n Date of Birth (mm/dd/year) \n Height (inches) \n Weight (lbs) \n Eye Color \n Occupation", char).toLocaleLowerCase();
@@ -91,7 +103,6 @@ function searchByTraits(people){
           searchByTraits();
           break;
         case "no":
-          ;
       }
     case "height":
       var height = promptFor("What is the person's height(inches)?", chars);
@@ -135,7 +146,6 @@ function searchByTraits(people){
       }
   }
 
-
   let filteredPeople = people.filter(function(el) {
     if(el.gender === gender && el.dob === dob && el.height === height && el.weight === weight && el.eyeColor === eyeColor && el.occupation === occupation){
       return el;
@@ -144,15 +154,11 @@ function searchByTraits(people){
 
 }
 
-function compareTraits(selectedTraits){
-
-}
-
 // alerts a list of people
 function displayPeople(people){
-  alert(people.map(function(person){
+  var people = people.map(function(person){
     return person.firstName + " " + person.lastName;
-  }).join("\n"));
+  }).join("\n");
 }
 
 function displayPerson(person){
