@@ -65,16 +65,27 @@ person = filteredPeople[0];
  mainMenu(person, people);
 
 }
+var findChildren = function(person, people){
+  var filterChildren = people.filter(function(el){
+    for(let i = 0; i<el.parents.length; i++)
+    {
+      if(el.parents[i] === person.id)
+      return el
+    }
+  });
+  displayPeople(filterChildren);
+}
 var displayParents = function(person,people){
   var parents1 = person.parents[0];
   var parents2 = person.parents[1];
   var spouse1 = person.currentSpouse;
   var filteredFamily = people.filter(function(el){
-    for(let i = 0; i< el.parents.length; i++)
-    {
-      if(el.parents[i] === person.id)
-      return el;
-    }
+    //for(let i = 0; i< el.parents.length; i++)
+    //{
+     // if(el.parents[i] === person.id)
+     // return el;
+    //}
+   
     if(el.id === parents1 || el.id === parents2 || el.id === spouse1){
       return el;
     }
@@ -83,7 +94,14 @@ var displayParents = function(person,people){
     //{
       //displayPerson(filteredFamily[i]);
     //}
+    findChildren(person,people);
     displayPeople(filteredFamily);
+   }
+   var displayDescendants = function(person,people){
+     var filterDescendants =people.filter(function(el){
+
+     }
+     )
    }
 function searchByTraits(people){
   var selectedTraits;
