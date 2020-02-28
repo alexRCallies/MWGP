@@ -161,10 +161,10 @@ function searchByTraits(people){
 
 // alerts a list of people
 function displayPeople(people){
-  var people = people.map(function(person){
+  alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
-  }).join("\n");
-  alert(people);
+  }).join("\n"));
+  
 }
 
 function displayPerson(person){
