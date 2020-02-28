@@ -42,6 +42,7 @@ function mainMenu(person, people){
       break;
     case "descendants":
       // TODO: get person's descendants
+      displayDescendants(person,people);
       break;
     case "restart":
       app(people); // restart
@@ -76,6 +77,14 @@ var findChildren = function(person, people){
   });
   displayPeople(filterChildren);
 }
+var displayDescendants = function(person,people){
+ var findDescendants = findChildren(person,people);
+ if(findDescendants.length > 0)
+ for(let i = 0; i < findDescendants.length; i++)
+ {
+ displayDescendants(findDescendants[i],findDescendants);
+ }
+}
 var displayParents = function(person,people){
   var parents1 = person.parents[0];
   var parents2 = person.parents[1];
@@ -97,12 +106,6 @@ var displayParents = function(person,people){
     //}
     findChildren(person,people);
     displayPeople(filteredFamily);
-   }
-   var displayDescendants = function(person,people){
-     var filterDescendants =people.filter(function(el){
-
-     }
-     )
    }
 function searchByTraits(people){
   var filteredPeople;
