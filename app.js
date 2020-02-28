@@ -79,10 +79,11 @@ var displayParents = function(person,people){
       return el;
     }
     });
-    for(let i = 0; i < filteredFamily.length; i++)
-    {
-      displayPerson(filteredFamily[i]);
-    }
+    //for(let i = 0; i < filteredFamily.length; i++)
+    //{
+      //displayPerson(filteredFamily[i]);
+    //}
+    displayPeople(filteredFamily);
    }
 function searchByTraits(people){
   var selectedTraits;
@@ -163,6 +164,7 @@ function displayPeople(people){
   var people = people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n");
+  alert(people);
 }
 
 function displayPerson(person){
